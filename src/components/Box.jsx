@@ -5,6 +5,7 @@ import Input from './Input';
 import GameEnd from './GameEnd';
 import Difficulty from './Difficulty';
 import wordList from './WordList';
+import StartGame from './StartGame';
 
 export default function Box() {
   const [score, setScore] = useState(0);
@@ -13,7 +14,7 @@ export default function Box() {
   );
   const [counter, setCounter] = useState(5);
   const [timer, setTimer] = useState('');
-  const [mount, setMount] = useState(false);
+  const [mount, setMount] = useState(true);
   const [level, setLevel] = useState(localStorage.getItem('level') || 'medium');
   const [increment, setIncrement] = useState(incrementChange(level));
   const [word, setWord] = useState(selectWord());
@@ -29,10 +30,6 @@ export default function Box() {
     if (!mount) {
       setMount(true);
       ticker();
-      // setHighScore(localStorage.getItem('highscore') || 0);
-      // setLevel(localStorage.getItem('level') || 'medium');
-      // setIncrement(incrementChange(level));
-      // setWord(selectWord());
     }
     if (counter === 0) {
       clearInterval(timer);
@@ -70,6 +67,7 @@ export default function Box() {
 
     setIncrement(bonusTime);
     setLevel(difficultyLevel);
+    setWord(selectWord());
   }
 
   function selectWord() {
@@ -78,13 +76,22 @@ export default function Box() {
     return list[item];
   }
 
+  function handleStart() {
+    setMount(false);
+    setCounter(5);
+    setScore(0);
+    // setWord(selectWord());
+  }
+
   return (
     <div className="container">
       <div className="container-body">
         <Difficulty onChange={difficultyChange} difficultyLevel={level} />
         <h1 className="title">Typing Game</h1>
         {counter === 0 ? (
-          <GameEnd score={score} highScore={highScore} />
+          <GameEnd score={score} highScore={highScore} onStart={handleStart} />
+        ) : mount === true && !timer ? (
+          <StartGame onStart={handleStart} />
         ) : (
           <>
             <Timer score={score} counter={counter} highScore={highScore} />
