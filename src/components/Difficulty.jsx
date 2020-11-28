@@ -3,7 +3,7 @@ import React from 'react';
 export default function Difficulty({ onChange, difficultyLevel }) {
   return (
     <div className="top">
-      <select onChange={onChange} className="selection" value={difficultyLevel}>
+      <select onChange={onChange} id="select" value={difficultyLevel}>
         <option value="easy">Easy</option>
         <option value="medium">Medium</option>
         <option value="hard">Hard</option>

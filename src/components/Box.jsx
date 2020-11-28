@@ -14,8 +14,8 @@ export default function Box() {
   const [counter, setCounter] = useState(5);
   const [timer, setTimer] = useState('');
   const [mount, setMount] = useState(false);
-  const [increment, setIncrement] = useState(4);
   const [level, setLevel] = useState(localStorage.getItem('level') || 'medium');
+  const [increment, setIncrement] = useState(incrementChange(level));
   const [word, setWord] = useState(selectWord());
 
   const updateHighScore = useCallback(() => {
@@ -29,6 +29,10 @@ export default function Box() {
     if (!mount) {
       setMount(true);
       ticker();
+      // setHighScore(localStorage.getItem('highscore') || 0);
+      // setLevel(localStorage.getItem('level') || 'medium');
+      // setIncrement(incrementChange(level));
+      // setWord(selectWord());
     }
     if (counter === 0) {
       clearInterval(timer);
@@ -53,12 +57,15 @@ export default function Box() {
     }
   }
 
+  function incrementChange(type) {
+    const bonusTime = type === 'hard' ? 1 : type === 'medium' ? 2 : 3;
+    return bonusTime;
+  }
+
   function difficultyChange({ currentTarget: option }) {
-    const bonusTime =
-      option.value === 'hard' ? 1 : option.value === 'medium' ? 2 : 3;
+    const bonusTime = incrementChange(option.value);
 
     const difficultyLevel = option.value;
-
     localStorage.setItem('level', difficultyLevel);
 
     setIncrement(bonusTime);
