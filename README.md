@@ -21,15 +21,15 @@ your score gets incremented along with bonus time (based on the difficulty level
 
 ### Bonus time based on difficulty level
 
-- Easy > +3s
-- Medium > +2s
-- Hard > +1s
+- Easy → +3s
+- Medium → +2s
+- Hard → +1s
 
 ## Score and highest score
 
 ![end screen](./src/images/end.png)
 
-Once the game ends you can see your score & highest score on the top right side below the reset button.
+Once the game ends you can see your current score & the highest score.
 
 You can restart the game by clicking the **Start again** button
 
